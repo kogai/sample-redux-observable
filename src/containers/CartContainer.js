@@ -22,12 +22,16 @@ CartContainer.propTypes = {
   checkout: PropTypes.func.isRequired
 }
 
-const mapStateToProps = (state) => ({
+const mapStateToProps = state => ({
   products: getCartProducts(state),
-  total: getTotal(state)
+  total: getTotal(state),
+})
+
+const mapDispatchToProps = dispatch => ({
+  checkout: products => dispatch(checkout(products)),
 })
 
 export default connect(
   mapStateToProps,
-  { checkout }
+  mapDispatchToProps,
 )(CartContainer)
