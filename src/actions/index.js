@@ -1,3 +1,4 @@
+import { Observable } from "rxjs";
 import shop from '../api/shop'
 import * as types from '../constants/ActionTypes'
 
@@ -23,12 +24,12 @@ export const addToCart = productId => (dispatch, getState) => {
   }
 }
 
-export const checkout = products => (dispatch, getState) => {
-  const { cart } = getState()
-
+export const checkout = products => dispatch => {
   dispatch({
-    type: types.CHECKOUT_REQUEST
+    type: types.CHECKOUT_REQUEST,
+    products,
   })
+  /**
   shop.buyProducts(products, () => {
     dispatch({
       type: types.CHECKOUT_SUCCESS,
@@ -37,4 +38,13 @@ export const checkout = products => (dispatch, getState) => {
     // Replace the line above with line below to rollback on failure:
     // dispatch({ type: types.CHECKOUT_FAILURE, cart })
   })
+  */
 }
+
+export const checkoutEpic = (action$, store) => action$
+  .ofType(types.CHECKOUT_REQUEST)
+  .mergeMap(products => Observable.bindCallback(shop.buyProducts)(products))
+  .map(_response => ({
+    type: types.CHECKOUT_SUCCESS,
+    cart: store.getState(),
+  }))
