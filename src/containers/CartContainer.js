@@ -1,7 +1,6 @@
 import React, { PropTypes } from 'react'
 import { connect } from 'react-redux'
 import { checkout } from '../actions'
-import { getTotal, getCartProducts } from '../reducers'
 import Cart from '../components/Cart'
 
 const CartContainer = ({ products, total, checkout }) => (
@@ -22,10 +21,13 @@ CartContainer.propTypes = {
   checkout: PropTypes.func.isRequired
 }
 
-const mapStateToProps = state => ({
-  products: getCartProducts(state),
-  total: getTotal(state),
+const mapStateToProps = ({ cart }) => {
+  const {products, total} = cart
+  return ({
+    products,
+    total,
 })
+}
 
 const mapDispatchToProps = dispatch => ({
   checkout: products => dispatch(checkout(products)),

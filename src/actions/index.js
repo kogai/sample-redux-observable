@@ -19,6 +19,11 @@ export const receiveInCart = productId => ({
   productId
 })
 
+export const updateCart = ({ total, products }) => ({
+  type: types.UPDATE_CART,
+  total, products,
+})
+
 export const checkout = products => ({
   type: types.CHECKOUT_REQUEST,
   products,
