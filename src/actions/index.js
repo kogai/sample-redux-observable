@@ -1,12 +1,17 @@
 import * as types from '../constants/ActionTypes'
 
-export const fetchAllProducts = () => ({
-  type: types.FETCH_PRODUCTS
+export const onLoad = () => ({
+  type: types.ON_LOAD
 })
 
 export const receiveAllProducts = products => ({
   type: types.RECEIVE_PRODUCTS,
   products
+})
+
+export const recieveUser = user => ({
+  type: types.RECEIVE_USER,
+  ...user
 })
 
 export const addToCart = productId => ({

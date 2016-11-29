@@ -1,16 +1,17 @@
 import { Observable } from "rxjs";
-import shop from '../api/shop'
+import {getProducts, buyProducts, getUser} from '../api'
 import {
-  FETCH_PRODUCTS,
+  ON_LOAD,
   ADD_TO_CART_UNSAFE,
   CHECKOUT_REQUEST,
   ADD_TO_CART,
 } from '../constants/ActionTypes'
-import {receiveAllProducts, receiveInCart, checkoutSuccess} from '../actions'
+import UserTypes from '../constants/UserTypes'
+import {receiveAllProducts, receiveInCart, checkoutSuccess, updateCart, recieveUser} from '../actions'
 
-export const allProductsEpic = (action$) => action$
-  .ofType(FETCH_PRODUCTS)
-  .mergeMap(_ => Observable.bindCallback(shop.getProducts)())
+export const allProductsEpic = action$ => action$
+  .ofType(ON_LOAD)
+  .mergeMap(_ => Observable.bindCallback(getProducts)())
   .map(receiveAllProducts)
 
 export const addToCartEpic = (action$, store) => action$
@@ -22,9 +23,14 @@ export const addToCartEpic = (action$, store) => action$
 export const checkoutEpic = (action$, store) => action$
   .ofType(CHECKOUT_REQUEST)
   .map(({products}) => products)
-  .mergeMap(products => Observable.bindCallback(shop.buyProducts)(products))
+  .mergeMap(products => Observable.bindCallback(buyProducts)(products))
   .map(_ => store.getState().cart)
   .map(checkoutSuccess)
+
+const userEpic = action$ => action$
+  .ofType(ON_LOAD)
+  .mergeMap(_ => Observable.bindCallback(getUser)())
+  .map(recieveUser)
 
 export const cartEpic = (action$, store) => {
   const productId$ = Observable.merge(

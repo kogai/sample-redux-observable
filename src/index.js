@@ -6,7 +6,7 @@ import createLogger from 'redux-logger'
 import { combineEpics, createEpicMiddleware } from 'redux-observable';
 
 import reducer from './reducers'
-import { fetchAllProducts } from './actions'
+import { onLoad } from './actions'
 import { checkoutEpic, allProductsEpic, addToCartEpic, cartEpic } from './epics'
 import App from './containers/App'
 
@@ -23,7 +23,7 @@ const store = createStore(
   applyMiddleware(...middleware)
 )
 
-store.dispatch(fetchAllProducts())
+store.dispatch(onLoad())
 
 render(
   <Provider store={store}>
