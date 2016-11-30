@@ -24,14 +24,14 @@ export const receiveInCart = productId => ({
   productId
 })
 
-export const updateCart = ({ total, products }) => ({
+export const updateCart = (cart) => ({
+  ...cart,
   type: types.UPDATE_CART,
-  total, products,
 })
 
-export const checkout = products => ({
+export const checkout = total => ({
   type: types.CHECKOUT_REQUEST,
-  products,
+  total,
 })
 
 export const checkoutSuccess = cart => ({

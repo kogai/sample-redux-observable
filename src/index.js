@@ -7,10 +7,10 @@ import { combineEpics, createEpicMiddleware } from 'redux-observable';
 
 import reducer from './reducers'
 import { onLoad } from './actions'
-import { checkoutEpic, allProductsEpic, addToCartEpic, cartEpic } from './epics'
+import { checkoutEpic, allProductsEpic, addToCartEpic, cartEpic, userEpic } from './epics'
 import App from './containers/App'
 
-export const rootEpic = combineEpics(checkoutEpic, allProductsEpic, addToCartEpic, cartEpic)
+export const rootEpic = combineEpics(checkoutEpic, allProductsEpic, addToCartEpic, cartEpic, userEpic)
 const epicMiddleware = createEpicMiddleware(rootEpic);
 
 const middleware = [epicMiddleware];

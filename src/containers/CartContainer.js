@@ -3,11 +3,12 @@ import { connect } from 'react-redux'
 import { checkout } from '../actions'
 import Cart from '../components/Cart'
 
-const CartContainer = ({ products, total, checkout }) => (
+const CartContainer = ({ products, total, discountRate, checkout }) => (
   <Cart
     products={products}
     total={total}
-    onCheckoutClicked={() => checkout(products)} />
+    discountRate={discountRate}
+    onCheckoutClicked={() => checkout(total)} />
 )
 
 CartContainer.propTypes = {
@@ -22,10 +23,11 @@ CartContainer.propTypes = {
 }
 
 const mapStateToProps = ({ cart }) => {
-  const {products, total} = cart
+  const {products, total, discountRate} = cart
   return ({
     products,
     total,
+    discountRate,
 })
 }
 

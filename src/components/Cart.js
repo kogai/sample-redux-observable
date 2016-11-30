@@ -1,7 +1,7 @@
 import React, { PropTypes } from 'react'
 import Product from './Product'
 
-const Cart  = ({ products, total, onCheckoutClicked }) => {
+const Cart  = ({ products, total, discountRate, onCheckoutClicked }) => {
   const hasProducts = products.length > 0
   const nodes = hasProducts ? (
     products.map(product =>
@@ -21,6 +21,8 @@ const Cart  = ({ products, total, onCheckoutClicked }) => {
       <h3>Your Cart</h3>
       <div>{nodes}</div>
       <p>Total: &#36;{total}</p>
+      <p>Discount rate: {discountRate * 100}%</p>
+      <p>Discounted Price: &#36;{total - total * discountRate}</p>
       <button onClick={onCheckoutClicked}
         disabled={hasProducts ? '' : 'disabled'}>
         Checkout
